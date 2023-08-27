@@ -5,7 +5,7 @@ import {${pojo.name}} from "src/app/controller/bean/core/${pojo.name}";
 
 <#list pojo.fields as field>
     <#if field.list>
-import {${field.typeAsPojo.name}${role.name?cap_first}ServiceImpl} from "src/app/module/${role.name?uncap_first}/service/impl/${field.typeAsPojo.name}${role.name?cap_first}ServiceImpl";
+import {${field.typeAsPojo.name}${role.name?cap_first}ServiceImpl} from "src/app/module/${role.name?uncap_first}/service/${field.typeAsPojo.name}${role.name?cap_first}ServiceImpl";
 import {${field.typeAsPojo.name}} from "src/app/controller/bean/core/${field.typeAsPojo.name}";
     </#if>
 </#list>
@@ -55,11 +55,11 @@ export class ${pojo.name}${role.name?cap_first}ServiceImpl  {
         }
 <#list pojo.fields as field>
     <#if field.list==true >
-        await Promise.all(
+       /* await Promise.all(
             existing${pojo.name}.${field.name}.map(async item => {
                 await this.${field.typeAsPojo.name?uncap_first}Service.deleteById(item.id);
             })
-        );
+        );*/
     </#if>
 </#list>
         await this.${pojo.name?uncap_first}Dao.deleteById(existing${pojo.name}.id);

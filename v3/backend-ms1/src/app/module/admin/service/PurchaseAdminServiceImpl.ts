@@ -41,7 +41,7 @@ export class PurchaseAdminServiceImpl  {
             // TODO : by Monsieur Zouani
             throw new NotFoundException(`Purchase with ID ${purchase.id} not found.`);
         }
-        /*await Promise.all(
+       /* await Promise.all(
             existingPurchase.purchaseItems.map(async item => {
                 await this.purchaseItemService.deleteById(item.id);
             })

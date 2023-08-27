@@ -5,16 +5,16 @@ import {Purchase} from "src/app/controller/bean/core/Purchase";
 import {PurchaseDto} from "src/app/controller/dto/PurchaseDto";
 
 import {ProductConverter} from "src/app/controller/converter/ProductConverter";
-import {PurchaseItemConverter} from "src/app/controller/converter/PurchaseItemConverter";
 import {ClientConverter} from "src/app/controller/converter/ClientConverter";
+import {PurchaseItemConverter} from "src/app/controller/converter/PurchaseItemConverter";
 
 @Injectable()
 export class PurchaseConverter extends AbstractConverter<Purchase, PurchaseDto> {
 
     constructor(
         @Inject(forwardRef(() => ProductConverter)) private readonly productConverter: ProductConverter,
-        @Inject(forwardRef(() => PurchaseItemConverter)) private readonly purchaseItemConverter: PurchaseItemConverter,
         @Inject(forwardRef(() => ClientConverter)) private readonly clientConverter: ClientConverter,
+        @Inject(forwardRef(() => PurchaseItemConverter)) private readonly purchaseItemConverter: PurchaseItemConverter,
         ) { super();
     }
 

@@ -24,12 +24,12 @@ import  {PurchaseDto}  from 'app/controller/model/Purchase.model';
 import {TFunction} from "i18next";
 import {Toast} from "primereact/toast";
 
-import {PurchaseItemDto} from 'app/controller/model/PurchaseItem.model';
-import {PurchaseItemAdminService} from 'app/controller/service/admin/PurchaseItemAdminService.service';
-import {ClientDto} from 'app/controller/model/Client.model';
-import {ClientAdminService} from 'app/controller/service/admin/ClientAdminService.service';
 import {ProductDto} from 'app/controller/model/Product.model';
 import {ProductAdminService} from 'app/controller/service/admin/ProductAdminService.service';
+import {ClientDto} from 'app/controller/model/Client.model';
+import {ClientAdminService} from 'app/controller/service/admin/ClientAdminService.service';
+import {PurchaseItemDto} from 'app/controller/model/PurchaseItem.model';
+import {PurchaseItemAdminService} from 'app/controller/service/admin/PurchaseItemAdminService.service';
 import {PurchaseCriteria} from "app/controller/criteria/PurchaseCriteria.model";
 import useEditHook from "app/component/zyhook/useEdit.hook";
 
@@ -84,9 +84,9 @@ const Edit: React.FC<PurchaseEditAdminType> = ({visible, onClose, showToast, sel
 
     const [purchaseItems, setPurchaseItems] = useState<PurchaseItemDto>(new PurchaseItemDto());
 
-    const purchaseItemAdminService = new PurchaseItemAdminService();
-    const clientAdminService = new ClientAdminService();
     const productAdminService = new ProductAdminService();
+    const clientAdminService = new ClientAdminService();
+    const purchaseItemAdminService = new PurchaseItemAdminService();
     useEffect(() => {
     clientAdminService.getList().then(({data}) => setClients(data)).catch(error => console.log(error));
 

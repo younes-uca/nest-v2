@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 
 import {Product} from "src/app/controller/bean/core/Product";
-import {PurchaseItem} from "src/app/controller/bean/core/PurchaseItem";
 import {Client} from "src/app/controller/bean/core/Client";
+import {PurchaseItem} from "src/app/controller/bean/core/PurchaseItem";
 
 @Entity('purchase')
 export class Purchase{
