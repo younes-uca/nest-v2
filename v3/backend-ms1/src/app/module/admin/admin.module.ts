@@ -25,15 +25,17 @@ import { ClientDao } from "src/app/controller/dao/facade/core/ClientDao";
 import { ClientConverter } from "src/app/controller/converter/ClientConverter";
 import { ClientAdminRest } from "src/app/module/admin/ws/ClientAdminRest";
 import { ClientAdminServiceImpl } from "src/app/module/admin/service/ClientAdminServiceImpl";
+import { UserDao } from "../auth/dao/UserDao";
+import { User } from "../auth/bean/User";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([  Purchase ,  PurchaseItem ,  Product ,  ClientCategory ,  Client , ])],
+    imports: [TypeOrmModule.forFeature([  Purchase ,  PurchaseItem ,  Product ,  ClientCategory ,  Client  ])],
     controllers: [ PurchaseAdminRest ,  PurchaseItemAdminRest ,  ProductAdminRest ,  ClientCategoryAdminRest ,  ClientAdminRest ,  ],
     providers: [  PurchaseAdminServiceImpl ,   PurchaseDao , PurchaseConverter ,
                   PurchaseItemAdminServiceImpl ,   PurchaseItemDao , PurchaseItemConverter ,
                   ProductAdminServiceImpl ,   ProductDao , ProductConverter ,
                   ClientCategoryAdminServiceImpl ,   ClientCategoryDao , ClientCategoryConverter ,
-                  ClientAdminServiceImpl ,   ClientDao , ClientConverter ,
+                  ClientAdminServiceImpl ,   ClientDao , ClientConverter
                   ],
 })
 export class AdminModule {}
