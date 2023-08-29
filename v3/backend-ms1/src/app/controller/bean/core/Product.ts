@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import {AuditBusinessObject} from "src/app/zynerator/audit/AuditBusinessObject";
 
 
 @Entity('product')
-export class Product{
+export class Product  extends AuditBusinessObject{
 
     @PrimaryGeneratedColumn()
     id: number;

@@ -2,11 +2,14 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {ClientCategory} from "src/app/controller/bean/core/ClientCategory";
+import {AbstractRepository} from "src/app/zynerator/repository/AbstractRepository";
 
 @Injectable()
-export class ClientCategoryDao {
+export class ClientCategoryDao  extends AbstractRepository<ClientCategory> {
 
-    constructor(@InjectRepository(ClientCategory) private readonly repository: Repository<ClientCategory>,) { }
+    constructor(@InjectRepository(ClientCategory) private readonly repository: Repository<ClientCategory>,) {
+        super( );
+    }
 
     async save(item: ClientCategory): Promise<ClientCategory> {
         const savedItem = await this.repository.save(item);

@@ -2,11 +2,14 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {Product} from "src/app/controller/bean/core/Product";
+import {AbstractRepository} from "src/app/zynerator/repository/AbstractRepository";
 
 @Injectable()
-export class ProductDao {
+export class ProductDao extends AbstractRepository<Product>{
 
-    constructor(@InjectRepository(Product) private readonly repository: Repository<Product>,) { }
+    constructor(@InjectRepository(Product) private readonly repository: Repository<Product>,) {
+        super();
+    }
 
     async save(item: Product): Promise<Product> {
         const savedItem = await this.repository.save(item);
