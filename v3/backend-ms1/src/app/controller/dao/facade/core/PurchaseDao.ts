@@ -20,9 +20,6 @@ export class PurchaseDao extends AbstractRepository<Purchase>{
         return this.repository.find();
     }
 
-    async  findAndCount(): Promise<Purchase[]> {
-        return this.repository.findAndCount();
-    }
 
     async findById(id: number): Promise<Purchase> {
         return this.repository.findOne({where: {id}});

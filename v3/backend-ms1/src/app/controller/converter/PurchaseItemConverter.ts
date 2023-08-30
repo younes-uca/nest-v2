@@ -10,6 +10,8 @@ import {PurchaseConverter} from "src/app/controller/converter/PurchaseConverter"
 @Injectable()
 export class PurchaseItemConverter extends AbstractConverter<PurchaseItem, PurchaseItemDto> {
 
+    product: boolean;
+    purchase: boolean;
     constructor(
         @Inject(forwardRef(() => ProductConverter)) private readonly productConverter: ProductConverter,
         @Inject(forwardRef(() => PurchaseConverter)) private readonly purchaseConverter: PurchaseConverter,
@@ -30,10 +32,10 @@ export class PurchaseItemConverter extends AbstractConverter<PurchaseItem, Purch
         if (dto.quantity) {
             item.quantity = dto.quantity;
         }
-        if (dto.product?.id) {
+        if (this.product && dto.product?.id) {
             item.product = this.productConverter.toItem(dto.product);
         }
-        if (dto.purchase?.id) {
+        if (this.purchase && dto.purchase?.id) {
             item.purchase = this.purchaseConverter.toItem(dto.purchase);
         }
         return item;
@@ -54,10 +56,10 @@ export class PurchaseItemConverter extends AbstractConverter<PurchaseItem, Purch
         if (item.quantity) {
             dto.quantity = item.quantity;
         }
-        if (item.product) {
+        if (this.product && item.product) {
             dto.product = this.productConverter.toDto(item.product);
         }
-        if (item.purchase) {
+        if (this.purchase && item.purchase) {
             dto.purchase = this.purchaseConverter.toDto(item.purchase);
         }
         return dto;

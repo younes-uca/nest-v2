@@ -11,7 +11,7 @@ import { User } from "./bean/User";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({ entities: [User] }),
+    TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,

@@ -9,12 +9,12 @@ import { User } from "../app/module/auth/bean/User";
 const databaseProperties: TypeOrmModuleOptions = {
   type: "mysql",
   host: "localhost",
-  port: 3306,
+  port: 3307,
   username: "root",
   password: "",
   database: "nest-purchase-v3",
   synchronize: true,
-  entities: [Purchase, Product, ClientCategory, Client, PurchaseItem]
+  entities: [Purchase, Product, ClientCategory, Client, PurchaseItem, User]
 
 };
 export default databaseProperties;

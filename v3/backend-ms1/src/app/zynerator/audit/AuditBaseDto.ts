@@ -3,7 +3,6 @@ import {BaseDto} from "src/app/zynerator/dto/BaseDto";
 
 @Exclude()
 export class AuditBaseDto extends BaseDto {
-    protected maxLevel: number = 2;
 
     @Expose({ name: 'createdOn' })
     createdOn?: string;
