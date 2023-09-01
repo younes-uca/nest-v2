@@ -1,0 +1,146 @@
+{
+    "new" : "New",
+    "search": "Search",
+    "export": "Export",
+    "validate": "Validate",
+    "search": "Seach...",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "next": "Next",
+    "yes": "Yes",
+    "no": "No",
+    "actions": "Actions",
+    "confirm": "Confirm",
+    "creation": "Creation",
+    "list": "List",
+
+    "product": "Product",
+    "TabPan": "Product",
+    "Header": "Liste des products",
+    "deleteProductConfirmationMessage": "Are you sure you want to delete product",
+
+
+
+    "Code": "Code",
+
+
+
+    "Reference": "Reference",
+
+
+
+    "purchase": "Purchase",
+    "TabPan": "Purchase",
+    "Header": "Liste des purchases",
+    "deletePurchaseConfirmationMessage": "Are you sure you want to delete purchase",
+
+
+
+    "Reference": "Reference",
+
+
+
+    "PurchaseDate": "Purchase date",
+    "PurchaseDateMin": "Purchase date Min",
+    "PurchaseDateMax": "Purchase date Max",
+
+
+
+    "Image": "Image",
+
+
+
+    "Total": "Total",
+    "TotalMin": "Total Min",
+    "TotalMax": "Total Max",
+
+
+
+    "Description": "Description",
+
+
+
+    "Client": "Client",
+
+    "ClientPlaceHolder": "Select a Client",
+    "ClientPlaceHolderFilter": "Search by Client",
+
+
+    "PurchaseItems": "Purchase items",
+
+
+
+    "purchaseItem": "PurchaseItem",
+    "TabPan": "Purchase item",
+    "Header": "Liste des purchase items",
+    "deletePurchaseItemConfirmationMessage": "Are you sure you want to delete purchase item",
+
+
+
+    "Product": "Product",
+
+    "ProductPlaceHolder": "Select a Product",
+    "ProductPlaceHolderFilter": "Search by Product",
+
+
+    "Price": "Price",
+    "PriceMin": "Price Min",
+    "PriceMax": "Price Max",
+
+
+
+    "Quantity": "Quantity",
+    "QuantityMin": "Quantity Min",
+    "QuantityMax": "Quantity Max",
+
+
+
+    "Purchase": "Purchase",
+
+    "PurchasePlaceHolder": "Select a Purchase",
+    "PurchasePlaceHolderFilter": "Search by Purchase",
+
+
+    "client": "Client",
+    "TabPan": "Client",
+    "Header": "Liste des clients",
+    "deleteClientConfirmationMessage": "Are you sure you want to delete client",
+
+
+
+    "FullName": "Full name",
+
+
+
+    "Email": "Email",
+
+
+
+    "ClientCategory": "Client category",
+
+    "ClientCategoryPlaceHolder": "Select a Client category",
+    "ClientCategoryPlaceHolderFilter": "Search by Client category",
+
+
+    "clientCategory": "ClientCategory",
+    "TabPan": "Client category",
+    "Header": "Liste des client categorys",
+    "deleteClientCategoryConfirmationMessage": "Are you sure you want to delete client category",
+
+
+
+    "Reference": "Reference",
+
+
+
+    "Code": "Code",
+
+
+
+
+    "from-to": "Elements from {first} to {last} (total {totalRecords})"
+
+}
+
+
