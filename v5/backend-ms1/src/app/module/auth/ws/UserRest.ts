@@ -10,9 +10,10 @@ export class UserRest {
   }
 
 
-  @Post("/user/login")
+  @Post("/login")
   async login(@Body() userRequest: UserRequest): Promise<string> {
-    return this.service.login(userRequest);
+    const promise = this.service.login(userRequest);
+    return promise;
   }
 
   @ApiOperation({ summary: "Saves the specified user" })

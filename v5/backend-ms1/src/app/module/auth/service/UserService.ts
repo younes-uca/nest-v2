@@ -1,4 +1,4 @@
-import {BadRequestException, Body, Injectable} from "@nestjs/common";
+import {BadRequestException, Injectable} from "@nestjs/common";
 import {JwtService} from "@nestjs/jwt";
 import {UserDao} from "../dao/UserDao";
 
@@ -25,7 +25,7 @@ export class UserService {
         return null;
     }
 
-    async login(userRequest: UserRequest): Promise<string> {
+    async login(userRequest: UserRequest): Promise<any> {
         const loadedUser = await this.findByUsername(userRequest.username);
         if (!loadedUser) {
             throw new BadRequestException("Bad Credentiels");
@@ -34,11 +34,13 @@ export class UserService {
             if (!hashedPasswordComparaison) {
                 throw new BadRequestException("Bad Credentiels");
             } else {
-                return this.jwtService.sign({
+                const jwt = this.jwtService.sign({
                     username: loadedUser.username,
                     email: loadedUser.email,
-                    role: loadedUser.role?.authority
+                    roles: [loadedUser.role?.authority]
                 });
+                //return {headers: {authorization : jwt}};
+                return jwt;
             }
         }
     }

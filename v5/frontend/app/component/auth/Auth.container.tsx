@@ -20,8 +20,11 @@ const AuthContainer: React.FC = ({}) => {
     const toast = useRef<Toast>();
 
     const handleAuthFormClick = () => {
-        userService.signIn(username, password).then(data => {
-            const jwt = data.headers['authorization'];
+        userService.signIn(username, password).then(({data}) => {
+            console.log(data)
+           // const jwt = data.headers['authorization'];
+            const jwt = data;
+            console.log(jwt)
             if (jwt) {
                 userService.saveToken(jwt)
                 router.push("/dashboard")
