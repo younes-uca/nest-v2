@@ -5,6 +5,8 @@ import {PaginatedList} from "src/app/zynerator/util/PaginatedList";
 import {PurchaseConverter} from "src/app/controller/converter/PurchaseConverter";
 import {PurchaseAdminServiceImpl} from "src/app/module/admin/service/PurchaseAdminServiceImpl";
 import {PurchaseDto} from "src/app/controller/dto/PurchaseDto";
+import {PurchaseCriteria} from "../../../controller/dao/criteria/core/PurchaseCriteria";
+import {Purchase} from "../../../controller/bean/core/Purchase";
 
 
 @ApiTags('Manages purchase services')
@@ -55,16 +57,16 @@ export class PurchaseAdminRest {
     }
 
     @ApiOperation({summary: 'Finds an optimized list of all purchases'})
-    @Get('find-by-criteria')
-    async findByCriteria(): Promise<PurchaseDto[]> {
-        const purchases = await this.service.findAll();
+    @Post('find-by-criteria')
+    async findByCriteria(@Body() criteria: PurchaseCriteria): Promise<PurchaseDto[]> {
+        const purchases = await this.service.findByCriteria(criteria);
         return this.converter.toDtos(purchases);
     }
 
     @ApiOperation({summary: 'Finds an optimized list of all purchases'})
-    @Get('find-paginated-by-criteria')
-    async findPaginatedByCriteria(): Promise<PaginatedList<PurchaseDto>> {
-        const purchases = await this.service.findAll();
+    @Post('find-paginated-by-criteria')
+    async findPaginatedByCriteria(@Body() criteria: PurchaseCriteria): Promise<PaginatedList<PurchaseDto>> {
+        const purchases = await this.service.findPaginatedByCriteria(criteria);
         const purchaseDtos = this.converter.toDtos(purchases);
         return new PaginatedList<PurchaseDto>(purchaseDtos, purchaseDtos.length);
     }
@@ -94,5 +96,6 @@ export class PurchaseAdminRest {
         const deletedPurchases = await this.service.deleteMultiple(purchases);
         return deletedPurchases.map(purchase => this.converter.toDto(purchase));
     }
+
 
 }

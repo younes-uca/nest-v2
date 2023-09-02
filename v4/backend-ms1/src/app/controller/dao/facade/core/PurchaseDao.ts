@@ -5,6 +5,8 @@ import {AbstractRepository} from "src/app/zynerator/repository/AbstractRepositor
 
 import {Purchase} from "src/app/controller/bean/core/Purchase";
 import {PurchaseCriteria} from "src/app/controller/dao/criteria/core/PurchaseCriteria";
+import {SelectQueryBuilder} from "typeorm/query-builder/SelectQueryBuilder";
+import {Product} from "../../../bean/core/Product";
 
 @Injectable()
 export class PurchaseDao extends AbstractRepository<Purchase, PurchaseCriteria> {
@@ -36,7 +38,7 @@ export class PurchaseDao extends AbstractRepository<Purchase, PurchaseCriteria> 
     }
 
 
-    async search(searchDto: PurchaseCriteria): Promise<Purchase[]> {
+    public constructQuery(searchDto: PurchaseCriteria): SelectQueryBuilder<Purchase> {
         const query = this.initQuery(this.repository);
         this.addConstraint(query, searchDto.reference, 'reference = :reference', {reference: searchDto.reference});
         this.addConstraintMinMax(query, searchDto.purchaseDateFrom, searchDto.purchaseDateTo, 'purchaseDate >= :purchaseDateFrom', 'purchaseDate <= :purchaseDateTo', {purchaseDateFrom: searchDto.purchaseDateFrom,purchaseDateTo: searchDto.purchaseDateTo,});
@@ -47,7 +49,8 @@ export class PurchaseDao extends AbstractRepository<Purchase, PurchaseCriteria> 
             this.addConstraint(query, searchDto.client.id, 'client.id = :clientId', {clientId: client.id,});
             this.addConstraint(query, searchDto.client.fullName, 'client.fullName = :clientFullName', {clientFullName: client.fullName,});
         }
-        return this.getResult(searchDto, query);
+        return query;
     }
 
-}
+
+    }

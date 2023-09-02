@@ -5,16 +5,20 @@ import {Purchase} from "src/app/controller/bean/core/Purchase";
 
 import {PurchaseItemAdminServiceImpl} from "src/app/module/admin/service/PurchaseItemAdminServiceImpl";
 import {PurchaseItem} from "src/app/controller/bean/core/PurchaseItem";
+import {PurchaseCriteria} from "../../../controller/dao/criteria/core/PurchaseCriteria";
+import {AbstractServiceImpl} from "../../../zynerator/service/AbstractServiceImpl";
 
 @Injectable()
-export class PurchaseAdminServiceImpl  {
+export class PurchaseAdminServiceImpl extends AbstractServiceImpl<Purchase, PurchaseCriteria, PurchaseDao>{
 
-    constructor(private readonly purchaseDao: PurchaseDao,
+    constructor(private readonly dao: PurchaseDao,
                  private readonly purchaseItemService: PurchaseItemAdminServiceImpl ,
-    ) {}
+    ) {
+        super(dao);
+    }
 
     async save(purchase: Purchase): Promise<Purchase> {
-        const savedPurchase = await this.purchaseDao.save(purchase);
+        const savedPurchase = await this.dao.save(purchase);
         if (purchase.purchaseItems) {
             const savedPurchaseItems: PurchaseItem[] = [];
             for (const purchaseItem of purchase.purchaseItems) {
@@ -28,11 +32,11 @@ export class PurchaseAdminServiceImpl  {
     }
 
     async findAll(): Promise<Purchase[]> {
-        return this.purchaseDao.findAll();
+        return this.dao.findAll();
     }
 
     async findById(id: number): Promise<Purchase> {
-        return this.purchaseDao.findById(id);
+        return this.dao.findById(id);
     }
 
     async delete(purchase: Purchase): Promise<Purchase> {
@@ -46,7 +50,7 @@ export class PurchaseAdminServiceImpl  {
                 await this.purchaseItemService.deleteById(item.id);
             })
         );*/
-        await this.purchaseDao.deleteById(existingPurchase.id);
+        await this.dao.deleteById(existingPurchase.id);
         return existingPurchase;
     }
 
@@ -60,16 +64,18 @@ export class PurchaseAdminServiceImpl  {
     }
 
     async findByClientId(id: number): Promise<Purchase[]> {
-        return this.purchaseDao.findByClientId(id);
+        return this.dao.findByClientId(id);
     }
 
     async findWithAssociatedLists(id: number): Promise<Purchase> {
-        const result = await this.purchaseDao.findById(id);
+        const result = await this.dao.findById(id);
         if (result && result.id) {
           result.purchaseItems = await this.purchaseItemService.findByPurchaseId(result.id);
         }
         return result;
     }
+
+
 
 }
 
