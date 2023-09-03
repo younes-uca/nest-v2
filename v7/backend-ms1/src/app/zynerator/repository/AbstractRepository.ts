@@ -21,6 +21,9 @@ export abstract class AbstractRepository<T, C extends BaseCriteria> {
     public getPaginatedResult(criteria: C, query: SelectQueryBuilder<T>) {
         const {page, maxResults} = criteria;
         const skip = (page - 1) * maxResults;
+        console.log(page);
+        console.log(maxResults);
+        console.log(skip);
         query.skip(skip).take(maxResults);
         return query.getMany();
     }
@@ -34,7 +37,8 @@ export abstract class AbstractRepository<T, C extends BaseCriteria> {
 
     public async findPaginatedByCriteria(criteria: C): Promise<T[]> {
         const query = this.constructQuery(criteria);
-        return this.getPaginatedResult(criteria,query);
+        let paginatedResult = await this.getPaginatedResult(criteria,query);
+        return paginatedResult;
     }
 
 

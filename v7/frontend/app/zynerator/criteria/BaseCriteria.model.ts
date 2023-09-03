@@ -1,4 +1,4 @@
 export class BaseCriteria {
-    public maxResults: number;
-    public page: number;
+    public maxResults = 10;
+    public page = 1;
 }

@@ -6,6 +6,7 @@ import {ClientConverter} from "src/app/controller/converter/ClientConverter";
 import {ClientAdminServiceImpl} from "src/app/module/admin/service/ClientAdminServiceImpl";
 import {ClientDto} from "src/app/controller/dto/ClientDto";
 import {ClientCriteria} from "src/app/controller/dao/criteria/core/ClientCriteria";
+import {ClientCategoryDto} from "../../../controller/dto/ClientCategoryDto";
 
 
 @ApiTags('Manages client services')
@@ -68,6 +69,16 @@ export class ClientAdminRest {
         const clients = await this.service.findPaginatedByCriteria(criteria);
         const clientDtos = this.converter.toDtos(clients);
         return new PaginatedList<ClientDto>(clientDtos, clientDtos.length);
+    }
+    @ApiOperation({summary: 'Finds an optimized list of all clients'})
+    @Get('init')
+    async init() {
+        for (let i = 0; i < 100; i++) {
+            let client = new ClientDto();
+            client.fullName = "cl"+i;
+            client.clientCategory =  new ClientCategoryDto(i%2+1);
+            await this.service.save(client);
+        }
     }
 
     @Get('detail/id/:id')
