@@ -11,14 +11,13 @@ export class ClientAdminServiceImpl  {
     constructor(private readonly dao: ClientDao,
     ) {}
 
-    async  findAllOptimized(): Promise<ClientDto[]> {
-        const promise = await this.dao.findAllOptimized();
-        console.log(promise)
-        return promise;
-    }
     async save(client: Client): Promise<Client> {
         const savedClient = await this.dao.save(client);
         return savedClient;
+    }
+
+    async  findAllOptimized(): Promise<ClientDto[]> {
+        return this.dao.findAllOptimized();
     }
 
     async findAll(): Promise<Client[]> {
