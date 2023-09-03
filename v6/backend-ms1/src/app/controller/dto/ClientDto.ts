@@ -6,4 +6,10 @@ export class ClientDto {
     public email: string;
 
     public clientCategory: ClientCategoryDto;
+
+
+    constructor(id?: number, email?: string) {
+        this.id = id;
+        this.email = email;
+    }
 }

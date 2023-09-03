@@ -2,25 +2,31 @@ import {Injectable, NotFoundException} from "@nestjs/common";
 
 import {ClientDao} from "src/app/controller/dao/facade/core/ClientDao";
 import {Client} from "src/app/controller/bean/core/Client";
+import {ClientDto} from "../../../controller/dto/ClientDto";
 
 
 @Injectable()
 export class ClientAdminServiceImpl  {
 
-    constructor(private readonly clientDao: ClientDao,
+    constructor(private readonly dao: ClientDao,
     ) {}
 
+    async  findAllOptimized(): Promise<ClientDto[]> {
+        const promise = await this.dao.findAllOptimized();
+        console.log(promise)
+        return promise;
+    }
     async save(client: Client): Promise<Client> {
-        const savedClient = await this.clientDao.save(client);
+        const savedClient = await this.dao.save(client);
         return savedClient;
     }
 
     async findAll(): Promise<Client[]> {
-        return this.clientDao.findAll();
+        return this.dao.findAll();
     }
 
     async findById(id: number): Promise<Client> {
-        return this.clientDao.findById(id);
+        return this.dao.findById(id);
     }
 
     async delete(client: Client): Promise<Client> {
@@ -29,7 +35,7 @@ export class ClientAdminServiceImpl  {
             // TODO : by Monsieur Zouani
             throw new NotFoundException(`Client with ID ${client.id} not found.`);
         }
-        await this.clientDao.deleteById(existingClient.id);
+        await this.dao.deleteById(existingClient.id);
         return existingClient;
     }
 
@@ -43,11 +49,11 @@ export class ClientAdminServiceImpl  {
     }
 
     async findByClientCategoryId(id: number): Promise<Client[]> {
-        return this.clientDao.findByClientCategoryId(id);
+        return this.dao.findByClientCategoryId(id);
     }
 
     async findWithAssociatedLists(id: number): Promise<Client> {
-        const result = await this.clientDao.findById(id);
+        const result = await this.dao.findById(id);
         if (result && result.id) {
         }
         return result;

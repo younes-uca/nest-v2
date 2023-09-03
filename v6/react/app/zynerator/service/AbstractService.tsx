@@ -26,6 +26,9 @@ class AbstractService<T extends BaseDto, C extends BaseCriteria> {
     getList(): Promise<AxiosResponse<T[]>> {
         return axios.get(this._url);
     }
+    getListOptimizsed(): Promise<AxiosResponse<T[]>> {
+        return axios.get(this._url + 'optimized' );
+    }
 
     save(item: T): Promise<AxiosResponse<T>> {
         return axios.post(this._url, item);

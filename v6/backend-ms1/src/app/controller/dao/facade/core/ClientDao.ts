@@ -5,6 +5,7 @@ import {AbstractRepository} from "src/app/zynerator/repository/AbstractRepositor
 
 import {Client} from "src/app/controller/bean/core/Client";
 import {ClientCriteria} from "src/app/controller/dao/criteria/core/ClientCriteria";
+import {ClientDto} from "../../../dto/ClientDto";
 
 @Injectable()
 export class ClientDao extends AbstractRepository<Client, ClientCriteria> {
@@ -18,6 +19,13 @@ export class ClientDao extends AbstractRepository<Client, ClientCriteria> {
         return savedItem;
     }
 
+    async  findAllOptimized(): Promise<ClientDto[]> {
+        return this.repository
+            .createQueryBuilder('item')
+            .select(['item.id AS id', 'item.email AS email'])
+            .getRawMany()
+            .then((result) => result.map((row) => new ClientDto(row.id, row.email)));
+    }
     async  findAll(): Promise<Client[]> {
         return this.repository.find();
     }

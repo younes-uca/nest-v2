@@ -102,7 +102,7 @@ const List = () => {
 
     useEffect(() => {
 
-        clientAdminService.getList().then(({data}) => setClients(data)).catch(error => console.log(error));
+        clientAdminService.getListOptimizsed().then(({data}) => setClients(data)).catch(error => console.log(error));
         fetchItems(criteria);
     }, []);
 
@@ -155,7 +155,7 @@ const List = () => {
                             </div>
                             <div className="flex flex-column col-3">
                                 <label className="mb-1"  htmlFor="6">{t("purchase.clientPlaceHolder")}</label>
-                                <Dropdown id="6" value={criteria.client} options={clients} onChange={(e) => setCriteria({ ...criteria, client: e.target.value })} optionLabel="fullName" filter showClear/>
+                                <Dropdown id="6" value={criteria.client} options={clients} onChange={(e) => setCriteria({ ...criteria, client: e.target.value })} optionLabel="email" filter showClear/>
                             </div>
                         </div>
                         <div style={{ marginTop : '1rem', display: 'flex', justifyContent: 'flex-end' }} >

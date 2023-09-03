@@ -51,8 +51,9 @@ export class ClientAdminRest {
     @ApiOperation({summary: 'Finds an optimized list of all clients'})
     @Get('optimized')
     async findAllOptimized(): Promise<ClientDto[]> {
-        const clients = await this.service.findAll();
-        return this.converter.toDtos(clients);
+        console.log("hanaaa f optimized ...")
+        const result = await this.service.findAllOptimized();
+        return result;
     }
 
     @ApiOperation({summary: 'Finds an optimized list of all clients'})
