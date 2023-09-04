@@ -2,10 +2,10 @@ import {BusinessObject} from "src/app/zynerator/bean/BusinessObject";
 
 
 export class AuditBusinessObject extends BusinessObject {
-    createdOn: Date;
-    updatedOn: Date;
-    createdBy: string;
-    updatedBy: string;
+    public createdOn: Date;
+    public updatedOn: Date;
+    public createdBy: string;
+    public updatedBy: string;
 
     constructor() {
         super();

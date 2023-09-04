@@ -9,11 +9,22 @@ import {PurchaseItemDto} from "src/app/controller/dto/PurchaseItemDto";
 
 
 @Injectable()
-export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseItem, PurchaseItemCriteria, PurchaseItemDao>{
+export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseItem, PurchaseItemCriteria, PurchaseItemDao> {
 
-    constructor(private readonly dao: PurchaseItemDao ,
+    constructor(private readonly dao: PurchaseItemDao,
     ) {
         super(dao);
+    }
+
+    async update(purchaseItem: PurchaseItem): Promise<PurchaseItem> {
+        const savedPurchaseItem = await this.dao.saveOrUpdate(purchaseItem);
+        return savedPurchaseItem;
+    }
+
+    async updateMultiple(purchaseItems: PurchaseItem[]): Promise<void> {
+        if (purchaseItems) {
+            purchaseItems.forEach(e => this.update(e))
+        }
     }
 
     async save(purchaseItem: PurchaseItem): Promise<PurchaseItem> {
@@ -21,7 +32,7 @@ export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseIt
         return savedPurchaseItem;
     }
 
-    async  findAllOptimized(): Promise<PurchaseItemDto[]> {
+    async findAllOptimized(): Promise<PurchaseItemDto[]> {
         return this.dao.findAllOptimized();
     }
 
@@ -32,6 +43,7 @@ export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseIt
     async findById(id: number): Promise<PurchaseItem> {
         return this.dao.findById(id);
     }
+
     async deleteById(id: number): Promise<void> {
         return this.dao.deleteById(id);
     }
@@ -58,6 +70,7 @@ export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseIt
     async findByProductId(id: number): Promise<PurchaseItem[]> {
         return this.dao.findByProductId(id);
     }
+
     async findByPurchaseId(id: number): Promise<PurchaseItem[]> {
         return this.dao.findByPurchaseId(id);
     }

@@ -21,6 +21,7 @@ export class ClientAdminServiceImpl extends AbstractServiceImpl<Client, ClientCr
         return savedClient;
     }
 
+
     async  findAllOptimized(): Promise<ClientDto[]> {
         return this.dao.findAllOptimized();
     }

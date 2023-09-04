@@ -6,6 +6,8 @@ import {AbstractRepository} from "src/app/zynerator/repository/AbstractRepositor
 import {Client} from "src/app/controller/bean/core/Client";
 import {ClientDto} from "src/app/controller/dto/ClientDto";
 import {ClientCriteria} from "src/app/controller/dao/criteria/core/ClientCriteria";
+import {PurchaseItem} from "../../../bean/core/PurchaseItem";
+import {ClientCategory} from "../../../bean/core/ClientCategory";
 
 @Injectable()
 export class ClientDao extends AbstractRepository<Client, ClientCriteria> {
@@ -17,6 +19,16 @@ export class ClientDao extends AbstractRepository<Client, ClientCriteria> {
     async save(item: Client): Promise<Client> {
         const savedItem = await this.repository.save(item);
         return savedItem;
+    }
+
+
+    async update(item: Client): Promise<Client> {
+        const entity = await this.findById(item.id);
+        if (!entity) {
+            throw new Error('Entity not found');
+        }
+        Object.assign(entity, item);
+        return this.repository.save(entity);
     }
 
     async  findAllOptimized(): Promise<ClientDto[]> {

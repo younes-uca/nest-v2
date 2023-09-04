@@ -45,14 +45,12 @@ export class PurchaseAdminRest {
     }
 
 
-    /*@ApiOperation({summary: 'Updates the specified purchase'})
+    @ApiOperation({summary: 'Updates the specified purchase'})
     @Put()
-    async update(@Body() dto: PurchaseDto): Promise<PurchaseDto> {
+    async update(@Body() dto: PurchaseDto): Promise<void> {
         const item = this.converter.toItem(dto);
-        const result = await this.service.update(item);
-        return this.converter.toDto(result);
+        const result = await this.service.updateWithAssociatedLists(item);
     }
-    */
 
     @ApiOperation({summary: 'Finds an optimized list of all purchases'})
     @Get('optimized')

@@ -19,17 +19,26 @@ export class ClientCategoryDao extends AbstractRepository<ClientCategory, Client
         return savedItem;
     }
 
-    async  findAllOptimized(): Promise<ClientCategoryDto[]> {
+    async update(item: ClientCategory): Promise<ClientCategory> {
+        const entity = await this.findById(item.id);
+        if (!entity) {
+            throw new Error('Entity not found');
+        }
+        Object.assign(entity, item);
+        return this.repository.save(entity);
+    }
+
+    async findAllOptimized(): Promise<ClientCategoryDto[]> {
         return this.repository
-        .createQueryBuilder('item')
-        .select(['item.id AS id', 'item.reference AS reference'])
-        .getRawMany()
-        .then((result) => result.map((row) => new ClientCategoryDto(row.id, row.reference)));
+            .createQueryBuilder('item')
+            .select(['item.id AS id', 'item.reference AS reference'])
+            .getRawMany()
+            .then((result) => result.map((row) => new ClientCategoryDto(row.id, row.reference)));
 
 
     }
 
-    async  findAll(): Promise<ClientCategory[]> {
+    async findAll(): Promise<ClientCategory[]> {
         return this.repository.find();
     }
 
@@ -43,10 +52,9 @@ export class ClientCategoryDao extends AbstractRepository<ClientCategory, Client
     }
 
 
-
     public constructQuery(criteria: ClientCategoryCriteria): SelectQueryBuilder<ClientCategory> {
         const query = this.initQuery(this.repository);
-    
+
 
         this.addConstraint(query, criteria.reference, 'reference = :reference', {reference: criteria.reference});
         this.addConstraint(query, criteria.code, 'code = :code', {code: criteria.code});

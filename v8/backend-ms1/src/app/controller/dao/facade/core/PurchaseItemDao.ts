@@ -19,17 +19,30 @@ export class PurchaseItemDao extends AbstractRepository<PurchaseItem, PurchaseIt
         return savedItem;
     }
 
-    async  findAllOptimized(): Promise<PurchaseItemDto[]> {
+    async saveOrUpdate(item: PurchaseItem): Promise<PurchaseItem> {
+        if (item.id) {
+            const entity = await this.findById(item.id);
+            if (!entity) {
+                throw new Error('Entity not found');
+            }
+            Object.assign(entity, item);
+            return this.repository.save(entity);
+        } else {
+            return this.repository.save(item);
+        }
+    }
+
+    async findAllOptimized(): Promise<PurchaseItemDto[]> {
         return this.repository
-                    .createQueryBuilder('item')
-                    .select(['item.id AS id'])
-                    .getRawMany()
-                    .then((result) => result.map((row) => new PurchaseItemDto(row.id)));
+            .createQueryBuilder('item')
+            .select(['item.id AS id'])
+            .getRawMany()
+            .then((result) => result.map((row) => new PurchaseItemDto(row.id)));
 
 
     }
 
-    async  findAll(): Promise<PurchaseItem[]> {
+    async findAll(): Promise<PurchaseItem[]> {
         return this.repository.find();
     }
 
@@ -45,6 +58,7 @@ export class PurchaseItemDao extends AbstractRepository<PurchaseItem, PurchaseIt
     findByProductId(id: number): Promise<PurchaseItem[]> {
         return this.repository.find({where: {product: {id}}});
     }
+
     findByPurchaseId(id: number): Promise<PurchaseItem[]> {
         return this.repository.find({where: {purchase: {id}}});
     }
@@ -54,10 +68,16 @@ export class PurchaseItemDao extends AbstractRepository<PurchaseItem, PurchaseIt
         const query = this.initQuery(this.repository)
             .leftJoin('item.product', 'product')
             .leftJoin('item.purchase', 'purchase')
-    .select(['item', 'product', 'purchase'])
+            .select(['item', 'product', 'purchase'])
 
-        this.addConstraintMinMax(query, criteria.priceMin, criteria.priceMax, 'price >= :priceMin', 'price <= :priceMax', {priceMin: criteria.priceMin,priceMax: criteria.priceMax,});
-        this.addConstraintMinMax(query, criteria.quantityMin, criteria.quantityMax, 'quantity >= :quantityMin', 'quantity <= :quantityMax', {quantityMin: criteria.quantityMin,quantityMax: criteria.quantityMax,});
+        this.addConstraintMinMax(query, criteria.priceMin, criteria.priceMax, 'price >= :priceMin', 'price <= :priceMax', {
+            priceMin: criteria.priceMin,
+            priceMax: criteria.priceMax,
+        });
+        this.addConstraintMinMax(query, criteria.quantityMin, criteria.quantityMax, 'quantity >= :quantityMin', 'quantity <= :quantityMax', {
+            quantityMin: criteria.quantityMin,
+            quantityMax: criteria.quantityMax,
+        });
         if (criteria.product) {
             const product = criteria.product;
             this.addConstraint(query, product.id, 'product.id = :productId', {productId: product.id,});

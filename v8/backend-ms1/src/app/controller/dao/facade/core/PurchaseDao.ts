@@ -19,17 +19,26 @@ export class PurchaseDao extends AbstractRepository<Purchase, PurchaseCriteria> 
         return savedItem;
     }
 
-    async  findAllOptimized(): Promise<PurchaseDto[]> {
+    async update(item: Purchase): Promise<Purchase> {
+        const entity = await this.findById(item.id);
+        if (!entity) {
+            throw new Error('Entity not found');
+        }
+        Object.assign(entity, item);
+        return this.repository.save(entity);
+    }
+
+    async findAllOptimized(): Promise<PurchaseDto[]> {
         return this.repository
-        .createQueryBuilder('item')
-        .select(['item.id AS id', 'item.reference AS reference'])
-        .getRawMany()
-        .then((result) => result.map((row) => new PurchaseDto(row.id, row.reference)));
+            .createQueryBuilder('item')
+            .select(['item.id AS id', 'item.reference AS reference'])
+            .getRawMany()
+            .then((result) => result.map((row) => new PurchaseDto(row.id, row.reference)));
 
 
     }
 
-    async  findAll(): Promise<Purchase[]> {
+    async findAll(): Promise<Purchase[]> {
         return this.repository.find();
     }
 
@@ -50,13 +59,19 @@ export class PurchaseDao extends AbstractRepository<Purchase, PurchaseCriteria> 
     public constructQuery(criteria: PurchaseCriteria): SelectQueryBuilder<Purchase> {
         const query = this.initQuery(this.repository)
             .leftJoin('item.client', 'client')
-            .select(['item',  'client'])
+            .select(['item', 'client'])
 
         this.addConstraint(query, criteria.reference, 'reference = :reference', {reference: criteria.reference});
-        this.addConstraintMinMax(query, criteria.purchaseDateFrom, criteria.purchaseDateTo, 'purchaseDate >= :purchaseDateFrom', 'purchaseDate <= :purchaseDateTo', {purchaseDateFrom: criteria.purchaseDateFrom,purchaseDateTo: criteria.purchaseDateTo,});
+        this.addConstraintMinMax(query, criteria.purchaseDateFrom, criteria.purchaseDateTo, 'purchaseDate >= :purchaseDateFrom', 'purchaseDate <= :purchaseDateTo', {
+            purchaseDateFrom: criteria.purchaseDateFrom,
+            purchaseDateTo: criteria.purchaseDateTo,
+        });
         this.addConstraint(query, criteria.image, 'image = :image', {image: criteria.image});
         this.addConstraint(query, criteria.etat, 'etat = :etat', {etat: criteria.etat});
-        this.addConstraintMinMax(query, criteria.totalMin, criteria.totalMax, 'total >= :totalMin', 'total <= :totalMax', {totalMin: criteria.totalMin,totalMax: criteria.totalMax,});
+        this.addConstraintMinMax(query, criteria.totalMin, criteria.totalMax, 'total >= :totalMin', 'total <= :totalMax', {
+            totalMin: criteria.totalMin,
+            totalMax: criteria.totalMax,
+        });
         if (criteria.client) {
             const client = criteria.client;
             this.addConstraint(query, client.id, 'client.id = :clientId', {clientId: client.id,});

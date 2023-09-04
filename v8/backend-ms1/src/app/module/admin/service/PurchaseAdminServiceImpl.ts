@@ -11,10 +11,10 @@ import {PurchaseItemAdminServiceImpl} from "src/app/module/admin/service/Purchas
 import {PurchaseItem} from "src/app/controller/bean/core/PurchaseItem";
 
 @Injectable()
-export class PurchaseAdminServiceImpl extends AbstractServiceImpl<Purchase, PurchaseCriteria, PurchaseDao>{
+export class PurchaseAdminServiceImpl extends AbstractServiceImpl<Purchase, PurchaseCriteria, PurchaseDao> {
 
-    constructor(private readonly dao: PurchaseDao ,
-                 private readonly purchaseItemService: PurchaseItemAdminServiceImpl ,
+    constructor(private readonly dao: PurchaseDao,
+                private readonly purchaseItemService: PurchaseItemAdminServiceImpl,
     ) {
         super(dao);
     }
@@ -33,7 +33,7 @@ export class PurchaseAdminServiceImpl extends AbstractServiceImpl<Purchase, Purc
         return savedPurchase;
     }
 
-    async  findAllOptimized(): Promise<PurchaseDto[]> {
+    async findAllOptimized(): Promise<PurchaseDto[]> {
         return this.dao.findAllOptimized();
     }
 
@@ -48,17 +48,18 @@ export class PurchaseAdminServiceImpl extends AbstractServiceImpl<Purchase, Purc
     async deleteById(id: number): Promise<void> {
         return this.dao.deleteById(id);
     }
+
     async delete(purchase: Purchase): Promise<Purchase> {
         const existingPurchase = await this.findWithAssociatedLists(purchase.id);
         if (!existingPurchase) {
             // TODO : by Monsieur Zouani
             throw new NotFoundException(`Purchase with ID ${purchase.id} not found.`);
         }
-       /* await Promise.all(
-            existingPurchase.purchaseItems.map(async item => {
-                await this.purchaseItemService.deleteById(item.id);
-            })
-        );*/
+        /* await Promise.all(
+             existingPurchase.purchaseItems.map(async item => {
+                 await this.purchaseItemService.deleteById(item.id);
+             })
+         );*/
         await this.dao.deleteById(existingPurchase.id);
         return existingPurchase;
     }
@@ -79,10 +80,22 @@ export class PurchaseAdminServiceImpl extends AbstractServiceImpl<Purchase, Purc
     async findWithAssociatedLists(id: number): Promise<Purchase> {
         const result = await this.dao.findById(id);
         if (result && result.id) {
-          result.purchaseItems = await this.purchaseItemService.findByPurchaseId(result.id);
+            result.purchaseItems = await this.purchaseItemService.findByPurchaseId(result.id);
         }
         return result;
     }
+
+
+    async updateWithAssociatedLists(item: Purchase): Promise<void> {
+        if (item && item.id) {
+            const oldElements = await this.purchaseItemService.findByPurchaseId(item.id);
+            const result = this.purchaseItemService.getToBeSavedAndToBeDeleted(oldElements, item.purchaseItems,);
+            await this.purchaseItemService.deleteMultiple(result[1]);
+            (result[0] || []).forEach((e) => e.purchase = item);
+            await this.purchaseItemService.updateMultiple(result[0]);
+        }
+    }
+
 
 }
 
