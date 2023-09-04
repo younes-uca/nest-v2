@@ -11,7 +11,7 @@ import {PurchaseItemCriteria} from "src/app/controller/dao/criteria/core/Purchas
 export class PurchaseItemDao extends AbstractRepository<PurchaseItem, PurchaseItemCriteria> {
 
     constructor(@InjectRepository(PurchaseItem) private readonly repository: Repository<PurchaseItem>,) {
-        super();
+        super(repository);
     }
 
     async save(item: PurchaseItem): Promise<PurchaseItem> {

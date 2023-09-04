@@ -6,6 +6,7 @@ import {ClientCategoryConverter} from "src/app/controller/converter/ClientCatego
 import {ClientCategoryAdminServiceImpl} from "src/app/module/admin/service/ClientCategoryAdminServiceImpl";
 import {ClientCategoryDto} from "src/app/controller/dto/ClientCategoryDto";
 import {ClientCategoryCriteria} from "src/app/controller/dao/criteria/core/ClientCategoryCriteria";
+import {ClientDto} from "../../../controller/dto/ClientDto";
 
 
 @ApiTags('Manages client category services')
@@ -65,9 +66,9 @@ export class ClientCategoryAdminRest {
     @ApiOperation({summary: 'Finds an optimized list of all clientCategorys'})
     @Post('find-paginated-by-criteria')
     async findPaginatedByCriteria(@Body() criteria: ClientCategoryCriteria): Promise<PaginatedList<ClientCategoryDto>> {
-        const clientCategorys = await this.service.findPaginatedByCriteria(criteria);
-        const clientCategoryDtos = this.converter.toDtos(clientCategorys);
-        return new PaginatedList<ClientCategoryDto>(clientCategoryDtos, clientCategoryDtos.length);
+        const paginated = await this.service.findPaginatedByCriteria(criteria);
+        const dtos = this.converter.toDtos(paginated.list);
+        return new PaginatedList<ClientCategoryDto>(dtos, paginated.dataSize);
     }
 
     @Get('detail/id/:id')

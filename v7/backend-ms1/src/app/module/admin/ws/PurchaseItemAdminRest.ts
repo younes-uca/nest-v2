@@ -65,9 +65,9 @@ export class PurchaseItemAdminRest {
     @ApiOperation({summary: 'Finds an optimized list of all purchaseItems'})
     @Post('find-paginated-by-criteria')
     async findPaginatedByCriteria(@Body() criteria: PurchaseItemCriteria): Promise<PaginatedList<PurchaseItemDto>> {
-        const purchaseItems = await this.service.findPaginatedByCriteria(criteria);
-        const purchaseItemDtos = this.converter.toDtos(purchaseItems);
-        return new PaginatedList<PurchaseItemDto>(purchaseItemDtos, purchaseItemDtos.length);
+        const paginated = await this.service.findPaginatedByCriteria(criteria);
+        const dtos = this.converter.toDtos(paginated.list);
+        return new PaginatedList<PurchaseItemDto>(dtos, paginated.dataSize);
     }
 
     @Get('detail/id/:id')

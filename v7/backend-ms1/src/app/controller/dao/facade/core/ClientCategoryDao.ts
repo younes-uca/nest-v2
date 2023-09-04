@@ -11,7 +11,7 @@ import {ClientCategoryCriteria} from "src/app/controller/dao/criteria/core/Clien
 export class ClientCategoryDao extends AbstractRepository<ClientCategory, ClientCategoryCriteria> {
 
     constructor(@InjectRepository(ClientCategory) private readonly repository: Repository<ClientCategory>,) {
-        super();
+        super(repository);
     }
 
     async save(item: ClientCategory): Promise<ClientCategory> {
@@ -25,8 +25,6 @@ export class ClientCategoryDao extends AbstractRepository<ClientCategory, Client
         .select(['item.id AS id', 'item.reference AS reference'])
         .getRawMany()
         .then((result) => result.map((row) => new ClientCategoryDto(row.id, row.reference)));
-
-
     }
 
     async  findAll(): Promise<ClientCategory[]> {
@@ -41,7 +39,6 @@ export class ClientCategoryDao extends AbstractRepository<ClientCategory, Client
     deleteById(id: number): Promise<void> {
         return this.repository.delete({id}).then(() => undefined);
     }
-
 
 
     public constructQuery(criteria: ClientCategoryCriteria): SelectQueryBuilder<ClientCategory> {

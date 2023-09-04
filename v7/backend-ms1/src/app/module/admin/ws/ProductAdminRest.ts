@@ -6,6 +6,8 @@ import {ProductConverter} from "src/app/controller/converter/ProductConverter";
 import {ProductAdminServiceImpl} from "src/app/module/admin/service/ProductAdminServiceImpl";
 import {ProductDto} from "src/app/controller/dto/ProductDto";
 import {ProductCriteria} from "src/app/controller/dao/criteria/core/ProductCriteria";
+import {ClientDto} from "../../../controller/dto/ClientDto";
+import {ClientCategoryDto} from "../../../controller/dto/ClientCategoryDto";
 
 
 @ApiTags('Manages product services')
@@ -65,9 +67,9 @@ export class ProductAdminRest {
     @ApiOperation({summary: 'Finds an optimized list of all products'})
     @Post('find-paginated-by-criteria')
     async findPaginatedByCriteria(@Body() criteria: ProductCriteria): Promise<PaginatedList<ProductDto>> {
-        const products = await this.service.findPaginatedByCriteria(criteria);
-        const productDtos = this.converter.toDtos(products);
-        return new PaginatedList<ProductDto>(productDtos, productDtos.length);
+        const paginated = await this.service.findPaginatedByCriteria(criteria);
+        const dtos = this.converter.toDtos(paginated.list);
+        return new PaginatedList<ClientCategoryDto>(dtos, paginated.dataSize);
     }
 
     @Get('detail/id/:id')

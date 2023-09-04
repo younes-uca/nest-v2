@@ -11,7 +11,7 @@ import {ProductCriteria} from "src/app/controller/dao/criteria/core/ProductCrite
 export class ProductDao extends AbstractRepository<Product, ProductCriteria> {
 
     constructor(@InjectRepository(Product) private readonly repository: Repository<Product>,) {
-        super();
+        super(repository);
     }
 
     async save(item: Product): Promise<Product> {

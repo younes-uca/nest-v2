@@ -6,6 +6,8 @@ import {PurchaseConverter} from "src/app/controller/converter/PurchaseConverter"
 import {PurchaseAdminServiceImpl} from "src/app/module/admin/service/PurchaseAdminServiceImpl";
 import {PurchaseDto} from "src/app/controller/dto/PurchaseDto";
 import {PurchaseCriteria} from "src/app/controller/dao/criteria/core/PurchaseCriteria";
+import {ClientDto} from "../../../controller/dto/ClientDto";
+import {ClientCategoryDto} from "../../../controller/dto/ClientCategoryDto";
 
 
 @ApiTags('Manages purchase services')
@@ -65,9 +67,9 @@ export class PurchaseAdminRest {
     @ApiOperation({summary: 'Finds an optimized list of all purchases'})
     @Post('find-paginated-by-criteria')
     async findPaginatedByCriteria(@Body() criteria: PurchaseCriteria): Promise<PaginatedList<PurchaseDto>> {
-        const purchases = await this.service.findPaginatedByCriteria(criteria);
-        const purchaseDtos = this.converter.toDtos(purchases);
-        return new PaginatedList<PurchaseDto>(purchaseDtos, purchaseDtos.length);
+        const paginated = await this.service.findPaginatedByCriteria(criteria);
+        const dtos = this.converter.toDtos(paginated.list);
+        return new PaginatedList<PurchaseDto>(dtos, paginated.dataSize);
     }
 
     @Get('detail/id/:id')

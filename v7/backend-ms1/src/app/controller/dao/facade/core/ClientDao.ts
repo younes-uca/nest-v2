@@ -11,7 +11,7 @@ import {ClientCriteria} from "src/app/controller/dao/criteria/core/ClientCriteri
 export class ClientDao extends AbstractRepository<Client, ClientCriteria> {
 
     constructor(@InjectRepository(Client) private readonly repository: Repository<Client>,) {
-        super();
+        super(repository);
     }
 
     async save(item: Client): Promise<Client> {

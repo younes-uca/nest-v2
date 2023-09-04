@@ -66,9 +66,9 @@ export class ClientAdminRest {
     @ApiOperation({summary: 'Finds an optimized list of all clients'})
     @Post('find-paginated-by-criteria')
     async findPaginatedByCriteria(@Body() criteria: ClientCriteria): Promise<PaginatedList<ClientDto>> {
-        const clients = await this.service.findPaginatedByCriteria(criteria);
-        const clientDtos = this.converter.toDtos(clients);
-        return new PaginatedList<ClientDto>(clientDtos, clientDtos.length);
+        const paginated = await this.service.findPaginatedByCriteria(criteria);
+        const dtos = this.converter.toDtos(paginated.list);
+        return new PaginatedList<ClientDto>(dtos, paginated.dataSize);
     }
     @ApiOperation({summary: 'Finds an optimized list of all clients'})
     @Get('init')
