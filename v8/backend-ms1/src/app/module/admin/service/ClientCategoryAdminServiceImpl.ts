@@ -9,9 +9,9 @@ import {ClientCategoryDto} from "src/app/controller/dto/ClientCategoryDto";
 
 
 @Injectable()
-export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCategory, ClientCategoryCriteria, ClientCategoryDao>{
+export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCategory, ClientCategoryCriteria, ClientCategoryDao> {
 
-    constructor(private readonly dao: ClientCategoryDao ,
+    constructor(private readonly dao: ClientCategoryDao,
     ) {
         super(dao);
     }
@@ -21,7 +21,7 @@ export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCa
         return savedClientCategory;
     }
 
-    async  findAllOptimized(): Promise<ClientCategoryDto[]> {
+    async findAllOptimized(): Promise<ClientCategoryDto[]> {
         return this.dao.findAllOptimized();
     }
 
@@ -31,6 +31,10 @@ export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCa
 
     async findById(id: number): Promise<ClientCategory> {
         return this.dao.findById(id);
+    }
+
+    async deleteById(id: number): Promise<void> {
+        return this.dao.deleteById(id);
     }
 
     async delete(clientCategory: ClientCategory): Promise<ClientCategory> {

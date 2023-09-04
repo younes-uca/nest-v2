@@ -30,6 +30,12 @@ export class PurchaseItemAdminRest {
         return this.converter.toDto(item);
     }
 
+    @ApiOperation({summary: 'delete a purchase item by id'})
+    @Delete('id/:id')
+    async deleteById(@Param('id') id: number): Promise<void> {
+        return this.service.deleteById(id);
+    }
+
     @ApiOperation({summary: 'Saves the specified purchase item'})
     @Post()
     async save(@Body() dto: PurchaseItemDto): Promise<PurchaseItemDto> {

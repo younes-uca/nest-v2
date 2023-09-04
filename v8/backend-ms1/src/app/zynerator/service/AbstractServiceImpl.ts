@@ -12,7 +12,6 @@ export class AbstractServiceImpl<T, C extends BaseCriteria, REPO extends Abstrac
 
   public async findPaginatedByCriteria(criteria: C): Promise<PaginatedList<T>> {
     const data = await  this.repo.findPaginatedByCriteria(criteria);
-    console.log(data);
     const count = await this.repo.count();
     return new PaginatedList<T>(data, count);;
   }

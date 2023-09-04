@@ -30,6 +30,12 @@ export class ClientCategoryAdminRest {
         return this.converter.toDto(item);
     }
 
+
+    @Delete('id/:id')
+    async deleteById(@Param('id') id: number): Promise<void> {
+        const deletedCount = await this.service.deleteById(id);
+        return deletedCount;
+    }
     @ApiOperation({summary: 'Saves the specified client category'})
     @Post()
     async save(@Body() dto: ClientCategoryDto): Promise<ClientCategoryDto> {

@@ -82,6 +82,12 @@ export class ClientAdminRest {
         return this.converter.toDtos(items);
     }
 
+    @Delete('id/:id')
+    async deleteById(@Param('id') id: number): Promise<void> {
+        const deletedCount = await this.service.deleteById(id);
+        return deletedCount;
+    }
+
     @Delete()
     async delete(@Body() dto: ClientDto): Promise<ClientDto> {
         const item = this.converter.toItem(dto);

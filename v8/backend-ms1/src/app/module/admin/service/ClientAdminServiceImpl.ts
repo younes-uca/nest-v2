@@ -32,6 +32,9 @@ export class ClientAdminServiceImpl extends AbstractServiceImpl<Client, ClientCr
     async findById(id: number): Promise<Client> {
         return this.dao.findById(id);
     }
+    async deleteById(id: number): Promise<void> {
+         return this.dao.deleteById(id);
+    }
 
     async delete(client: Client): Promise<Client> {
         const existingClient = await this.findWithAssociatedLists(client.id);

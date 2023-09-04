@@ -33,6 +33,10 @@ export class ProductAdminServiceImpl extends AbstractServiceImpl<Product, Produc
         return this.dao.findById(id);
     }
 
+    async deleteById(id: number): Promise<void> {
+        return this.dao.deleteById(id);
+    }
+
     async delete(product: Product): Promise<Product> {
         const existingProduct = await this.findWithAssociatedLists(product.id);
         if (!existingProduct) {

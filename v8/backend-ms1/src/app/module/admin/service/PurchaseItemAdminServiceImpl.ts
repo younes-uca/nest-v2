@@ -32,6 +32,9 @@ export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseIt
     async findById(id: number): Promise<PurchaseItem> {
         return this.dao.findById(id);
     }
+    async deleteById(id: number): Promise<void> {
+        return this.dao.deleteById(id);
+    }
 
     async delete(purchaseItem: PurchaseItem): Promise<PurchaseItem> {
         const existingPurchaseItem = await this.findWithAssociatedLists(purchaseItem.id);
