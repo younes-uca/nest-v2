@@ -79,6 +79,7 @@ export class PurchaseItemAdminRest {
     @Get('detail/id/:id')
     async findWithAssociatedLists(@Param('id') id: number): Promise<PurchaseItemDto> {
         const item = await this.service.findWithAssociatedLists(id);
+        console.log(item)
         return this.converter.toDto(item);
     }
 
