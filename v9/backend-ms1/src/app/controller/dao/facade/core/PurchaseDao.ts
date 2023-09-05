@@ -52,12 +52,18 @@ export class PurchaseDao extends AbstractRepository<Purchase, PurchaseCriteria> 
     }
 
 
-    deleteById(id: number): Promise<void> {
-        return this.repository.delete({id}).then(() => undefined);
+    async deleteById(id: number): Promise<number> {
+        const result = await this.repository.delete({id});
+        return result.affected;
     }
 
-    findByClientId(id: number): Promise<Purchase[]> {
+    async findByClientId(id: number): Promise<Purchase[]> {
         return this.repository.find({where: {client: {id}}});
+    }
+
+    async deleteByClientId(id: number): Promise<number> {
+        const result = await this.repository.delete({client: {id}});
+        return result.affected;
     }
 
 

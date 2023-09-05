@@ -1,5 +1,5 @@
-import {ProductDto} from "src/app/controller/dto/ProductDto";
 import {PurchaseDto} from "src/app/controller/dto/PurchaseDto";
+import {ProductDto} from "src/app/controller/dto/ProductDto";
 
 export class PurchaseItemDto {
     public id: number;

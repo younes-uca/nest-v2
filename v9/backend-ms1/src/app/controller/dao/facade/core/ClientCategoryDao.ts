@@ -52,8 +52,9 @@ export class ClientCategoryDao extends AbstractRepository<ClientCategory, Client
     }
 
 
-    deleteById(id: number): Promise<void> {
-        return this.repository.delete({id}).then(() => undefined);
+    async deleteById(id: number): Promise<number> {
+        const result = await this.repository.delete({id});
+        return result.affected;
     }
 
 

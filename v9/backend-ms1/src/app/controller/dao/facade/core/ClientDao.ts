@@ -52,12 +52,18 @@ export class ClientDao extends AbstractRepository<Client, ClientCriteria> {
     }
 
 
-    deleteById(id: number): Promise<void> {
-        return this.repository.delete({id}).then(() => undefined);
+    async deleteById(id: number): Promise<number> {
+        const result = await this.repository.delete({id});
+        return result.affected;
     }
 
-    findByClientCategoryId(id: number): Promise<Client[]> {
+    async findByClientCategoryId(id: number): Promise<Client[]> {
         return this.repository.find({where: {clientCategory: {id}}});
+    }
+
+    async deleteByClientCategoryId(id: number): Promise<number> {
+        const result = await this.repository.delete({clientCategory: {id}});
+        return result.affected;
     }
 
 

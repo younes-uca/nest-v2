@@ -45,18 +45,17 @@ export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseIt
         return this.dao.findById(id);
     }
 
-    async deleteById(id: number): Promise<void> {
+    async deleteById(id: number): Promise<number> {
         return this.dao.deleteById(id);
     }
 
-    async delete(purchaseItem: PurchaseItem): Promise<PurchaseItem> {
-        const existingPurchaseItem = await this.findWithAssociatedLists(purchaseItem.id);
-        if (!existingPurchaseItem) {
-            // TODO : by Monsieur Zouani
-            throw new NotFoundException(`Purchase item with ID ${purchaseItem.id} not found.`);
+    async delete(item: PurchaseItem): Promise<PurchaseItem> {
+        const existing = await this.findById(item.id);
+        if (!existing) {
+            throw new NotFoundException(`Purchase item with ID ${item.id} not found.`);
         }
-        await this.dao.deleteById(existingPurchaseItem.id);
-        return existingPurchaseItem;
+        await this.dao.deleteById(existing.id);
+        return existing;
     }
 
     async deleteMultiple(purchaseItems: PurchaseItem[]): Promise<PurchaseItem[]> {
@@ -71,8 +70,16 @@ export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseIt
     async findByProductId(id: number): Promise<PurchaseItem[]> {
         return this.dao.findByProductId(id);
     }
+
+    async deleteByProductId(id: number): Promise<number> {
+        return this.dao.deleteByProductId(id);
+    }
     async findByPurchaseId(id: number): Promise<PurchaseItem[]> {
         return this.dao.findByPurchaseId(id);
+    }
+
+    async deleteByPurchaseId(id: number): Promise<number> {
+        return this.dao.deleteByPurchaseId(id);
     }
 
     async findWithAssociatedLists(id: number): Promise<PurchaseItem> {
@@ -80,12 +87,8 @@ export class PurchaseItemAdminServiceImpl extends AbstractServiceImpl<PurchaseIt
     return result;
     }
 
-
-
     async updateWithAssociatedLists(item: PurchaseItem): Promise<PurchaseItem> {
          return await this.dao.saveOrUpdate(item);
     }
-
-
 }
 

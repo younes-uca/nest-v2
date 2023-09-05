@@ -1,6 +1,6 @@
+import {ClientDto} from "src/app/controller/dto/ClientDto";
 import {PurchaseItemDto} from "src/app/controller/dto/PurchaseItemDto";
 import {ProductDto} from "src/app/controller/dto/ProductDto";
-import {ClientDto} from "src/app/controller/dto/ClientDto";
 
 export class PurchaseDto {
     public id: number;

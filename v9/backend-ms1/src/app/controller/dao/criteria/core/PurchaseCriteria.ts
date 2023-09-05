@@ -1,7 +1,7 @@
 import {BaseCriteria} from "src/app/zynerator/criteria/BaseCriteria";
+import {ClientCriteria} from "src/app/controller/dao/criteria/core/ClientCriteria";
 import {PurchaseItemCriteria} from "src/app/controller/dao/criteria/core/PurchaseItemCriteria";
 import {ProductCriteria} from "src/app/controller/dao/criteria/core/ProductCriteria";
-import {ClientCriteria} from "src/app/controller/dao/criteria/core/ClientCriteria";
 
 
 export class PurchaseCriteria extends  BaseCriteria  {

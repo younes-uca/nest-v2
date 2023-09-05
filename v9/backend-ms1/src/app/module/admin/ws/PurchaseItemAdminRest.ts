@@ -32,7 +32,7 @@ export class PurchaseItemAdminRest {
 
     @ApiOperation({summary: 'Deletes a purchase item by id'})
     @Delete('id/:id')
-    async deleteById(@Param('id') id: number): Promise<void> {
+    async deleteById(@Param('id') id: number): Promise<number> {
         return this.service.deleteById(id);
     }
 
@@ -51,7 +51,7 @@ export class PurchaseItemAdminRest {
         const item = this.converter.toItem(dto);
         const result = await this.service.updateWithAssociatedLists(item);
         return this.converter.toDto(result);
-    }
+   }
 
     @ApiOperation({summary: 'Finds an optimized list of all purchaseItems'})
     @Get('optimized')

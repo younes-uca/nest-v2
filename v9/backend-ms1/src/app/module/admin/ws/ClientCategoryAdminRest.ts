@@ -32,7 +32,7 @@ export class ClientCategoryAdminRest {
 
     @ApiOperation({summary: 'Deletes a client category by id'})
     @Delete('id/:id')
-    async deleteById(@Param('id') id: number): Promise<void> {
+    async deleteById(@Param('id') id: number): Promise<number> {
         return this.service.deleteById(id);
     }
 
@@ -51,8 +51,7 @@ export class ClientCategoryAdminRest {
         const item = this.converter.toItem(dto);
         const result = await this.service.updateWithAssociatedLists(item);
         return this.converter.toDto(result);
-
-    }
+   }
 
     @ApiOperation({summary: 'Finds an optimized list of all clientCategorys'})
     @Get('optimized')

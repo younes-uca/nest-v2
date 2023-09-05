@@ -45,18 +45,17 @@ export class ClientAdminServiceImpl extends AbstractServiceImpl<Client, ClientCr
         return this.dao.findById(id);
     }
 
-    async deleteById(id: number): Promise<void> {
+    async deleteById(id: number): Promise<number> {
         return this.dao.deleteById(id);
     }
 
-    async delete(client: Client): Promise<Client> {
-        const existingClient = await this.findWithAssociatedLists(client.id);
-        if (!existingClient) {
-            // TODO : by Monsieur Zouani
-            throw new NotFoundException(`Client with ID ${client.id} not found.`);
+    async delete(item: Client): Promise<Client> {
+        const existing = await this.findById(item.id);
+        if (!existing) {
+            throw new NotFoundException(`Client with ID ${item.id} not found.`);
         }
-        await this.dao.deleteById(existingClient.id);
-        return existingClient;
+        await this.dao.deleteById(existing.id);
+        return existing;
     }
 
     async deleteMultiple(clients: Client[]): Promise<Client[]> {
@@ -72,6 +71,10 @@ export class ClientAdminServiceImpl extends AbstractServiceImpl<Client, ClientCr
         return this.dao.findByClientCategoryId(id);
     }
 
+    async deleteByClientCategoryId(id: number): Promise<number> {
+        return this.dao.deleteByClientCategoryId(id);
+    }
+
     async findWithAssociatedLists(id: number): Promise<Client> {
         const result = await this.dao.findById(id);
     return result;
@@ -80,7 +83,5 @@ export class ClientAdminServiceImpl extends AbstractServiceImpl<Client, ClientCr
     async updateWithAssociatedLists(item: Client): Promise<Client> {
          return await this.dao.saveOrUpdate(item);
     }
-
-
 }
 

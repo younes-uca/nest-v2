@@ -45,18 +45,17 @@ export class ProductAdminServiceImpl extends AbstractServiceImpl<Product, Produc
         return this.dao.findById(id);
     }
 
-    async deleteById(id: number): Promise<void> {
+    async deleteById(id: number): Promise<number> {
         return this.dao.deleteById(id);
     }
 
-    async delete(product: Product): Promise<Product> {
-        const existingProduct = await this.findWithAssociatedLists(product.id);
-        if (!existingProduct) {
-            // TODO : by Monsieur Zouani
-            throw new NotFoundException(`Product with ID ${product.id} not found.`);
+    async delete(item: Product): Promise<Product> {
+        const existing = await this.findById(item.id);
+        if (!existing) {
+            throw new NotFoundException(`Product with ID ${item.id} not found.`);
         }
-        await this.dao.deleteById(existingProduct.id);
-        return existingProduct;
+        await this.dao.deleteById(existing.id);
+        return existing;
     }
 
     async deleteMultiple(products: Product[]): Promise<Product[]> {
@@ -74,12 +73,8 @@ export class ProductAdminServiceImpl extends AbstractServiceImpl<Product, Produc
     return result;
     }
 
-
-
     async updateWithAssociatedLists(item: Product): Promise<Product> {
          return await this.dao.saveOrUpdate(item);
     }
-
-
 }
 

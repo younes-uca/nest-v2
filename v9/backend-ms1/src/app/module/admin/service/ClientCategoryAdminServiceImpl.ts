@@ -9,9 +9,9 @@ import {ClientCategoryDto} from "src/app/controller/dto/ClientCategoryDto";
 
 
 @Injectable()
-export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCategory, ClientCategoryCriteria, ClientCategoryDao> {
+export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCategory, ClientCategoryCriteria, ClientCategoryDao>{
 
-    constructor(private readonly dao: ClientCategoryDao,
+    constructor(private readonly dao: ClientCategoryDao ,
     ) {
         super(dao);
     }
@@ -33,7 +33,7 @@ export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCa
         }
     }
 
-    async findAllOptimized(): Promise<ClientCategoryDto[]> {
+    async  findAllOptimized(): Promise<ClientCategoryDto[]> {
         return this.dao.findAllOptimized();
     }
 
@@ -45,18 +45,17 @@ export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCa
         return this.dao.findById(id);
     }
 
-    async deleteById(id: number): Promise<void> {
+    async deleteById(id: number): Promise<number> {
         return this.dao.deleteById(id);
     }
 
-    async delete(clientCategory: ClientCategory): Promise<ClientCategory> {
-        const existingClientCategory = await this.findWithAssociatedLists(clientCategory.id);
-        if (!existingClientCategory) {
-            // TODO : by Monsieur Zouani
-            throw new NotFoundException(`Client category with ID ${clientCategory.id} not found.`);
+    async delete(item: ClientCategory): Promise<ClientCategory> {
+        const existing = await this.findById(item.id);
+        if (!existing) {
+            throw new NotFoundException(`Client category with ID ${item.id} not found.`);
         }
-        await this.dao.deleteById(existingClientCategory.id);
-        return existingClientCategory;
+        await this.dao.deleteById(existing.id);
+        return existing;
     }
 
     async deleteMultiple(clientCategorys: ClientCategory[]): Promise<ClientCategory[]> {
@@ -71,14 +70,11 @@ export class ClientCategoryAdminServiceImpl extends AbstractServiceImpl<ClientCa
 
     async findWithAssociatedLists(id: number): Promise<ClientCategory> {
         const result = await this.dao.findById(id);
-        return result;
+    return result;
     }
-
 
     async updateWithAssociatedLists(item: ClientCategory): Promise<ClientCategory> {
-        return await this.dao.saveOrUpdate(item);
+         return await this.dao.saveOrUpdate(item);
     }
-
-
 }
 

@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 
+import {Client} from "src/app/controller/bean/core/Client";
 import {PurchaseItem} from "src/app/controller/bean/core/PurchaseItem";
 import {Product} from "src/app/controller/bean/core/Product";
-import {Client} from "src/app/controller/bean/core/Client";
 
 import {AuditBusinessObject} from "src/app/zynerator/audit/AuditBusinessObject";
 

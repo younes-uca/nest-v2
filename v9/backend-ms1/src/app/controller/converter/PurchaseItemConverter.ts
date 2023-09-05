@@ -4,8 +4,8 @@ import {AbstractConverter} from "src/app/zynerator/converter/AbstractConverter";
 import {PurchaseItem} from "src/app/controller/bean/core/PurchaseItem";
 import {PurchaseItemDto} from "src/app/controller/dto/PurchaseItemDto";
 
-import {ProductConverter} from "src/app/controller/converter/ProductConverter";
 import {PurchaseConverter} from "src/app/controller/converter/PurchaseConverter";
+import {ProductConverter} from "src/app/controller/converter/ProductConverter";
 import {Purchase} from "src/app/controller/bean/core/Purchase";
 
 @Injectable()
@@ -15,8 +15,8 @@ export class PurchaseItemConverter extends AbstractConverter<PurchaseItem, Purch
     purchase: boolean;
 
     constructor(
-        @Inject(forwardRef(() => ProductConverter)) readonly productConverter: ProductConverter,
         @Inject(forwardRef(() => PurchaseConverter)) readonly purchaseConverter: PurchaseConverter,
+        @Inject(forwardRef(() => ProductConverter)) readonly productConverter: ProductConverter,
         ) {
             super();
             this.init(true);
